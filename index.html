@@ -35,7 +35,7 @@ let topic=document.getElementById('topic').value;
 let style=document.getElementById('style').value;
 document.getElementById('preview').innerText='BOOSS soch raha hai...';
 try{
-let r=await fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},body:JSON.stringify({model:'llama-3.1-8b-instant',messages:[{role:'user',content:'Tu BOOSS AI hai. '+style+' style me Hindi/Hinglish me is topic pe 30 sec ka viral YouTube Shorts script bana: '+topic+'. Hook, 3 scene, voiceover aur hashtags de.'}]})});
+let r=await fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},body:JSON.stringify({model:'openai/gpt-oss-20b',messages:[{role:'user',content:'Tu BOOSS AI hai. '+style+' style me Hindi/Hinglish me is topic pe 30 sec ka viral YouTube Shorts script bana: '+topic+'. Hook, 3 scene, voiceover aur hashtags de.'}]})});
 let d=await r.json();
 if(d.error){document.getElementById('preview').innerText='Error: '+d.error.message;return;}
 document.getElementById('preview').innerText=d.choices[0].message.content;
