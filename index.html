@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BOOSS AI - Script to Video Maker</title>
+<title>BOOSS AI</title>
 <style>
 body{background:#0f0f0f;color:white;font-family:Arial;padding:15px}
 .box{background:#1e1e1e;padding:20px;border-radius:15px;max-width:600px;margin:auto}
@@ -11,17 +11,31 @@ input,textarea,select,button{width:100%;padding:13px;margin:8px 0;border-radius:
 input,textarea,select{background:#2a2a2a;color:white}
 button{background:linear-gradient(90deg,#ff0055,#ffaa00);color:white;font-weight:bold;font-size:16px}
 #preview{margin-top:20px;background:#000;padding:15px;border-radius:10px;white-space:pre-wrap}
-.tag{display:inline-block;background:#333;padding:5px 10px;border-radius:20px;margin:3px;font-size:12px}
 </style>
 </head>
 <body>
 <div class="box">
 <h2>🔥 BOOSS AI</h2>
 <p>Groq API Key daalo (ek baar):</p>
-<input id="key" placeholder="gsk_... wali key yahan paste karo" type="password">
+<input id="key" placeholder="gsk_... wali key" type="password">
 <p>Video ka Topic likho:</p>
-<textarea id="topic" placeholder="Jaise: Bhopal ki chai pe funny video..."></textarea>'let r=await fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},body:JSON.stringify({model:'llama-3.1-8b-instant',messages:[{role:'user',content:'Tu BOOSS AI hai. '+style+' style me Hindi/Hinglish me is topic pe 30 sec ka viral YouTube Shorts script bana: '+topic+'. Hook, 3 scene, voiceover aur hashtags de.'}]})});
-}]})});
+<textarea id="topic" placeholder="Jaise: Bhopal ki chai..."></textarea>
+<select id="style"><option>Funny</option><option>Motivational</option><option>Horror</option><option>Emotional</option></select>
+<button onclick="gen()">🚀 SCRIPT BANAO</button>
+<div id="preview">Yahan script ayega...</div>
+</div>
+<script>
+let k=document.getElementById('key');
+k.value=localStorage.getItem('groqkey')||'';
+k.onchange=()=>localStorage.setItem('groqkey',k.value);
+async function gen(){
+let key=k.value.trim();
+if(!key){alert('Pehle Groq Key daalo!');return;}
+let topic=document.getElementById('topic').value;
+let style=document.getElementById('style').value;
+document.getElementById('preview').innerText='BOOSS soch raha hai...';
+try{
+let r=await fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},body:JSON.stringify({model:'llama-3.1-8b-instant',messages:[{role:'user',content:'Tu BOOSS AI hai. '+style+' style me Hindi/Hinglish me is topic pe 30 sec ka viral YouTube Shorts script bana: '+topic+'. Hook, 3 scene, voiceover aur hashtags de.'}]})});
 let d=await r.json();
 if(d.error){document.getElementById('preview').innerText='Error: '+d.error.message;return;}
 document.getElementById('preview').innerText=d.choices[0].message.content;
